@@ -17,6 +17,9 @@
 package org.fs.widget.progress_button
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.InsetDrawable
 import android.support.v4.widget.CircularProgressDrawable
 import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
@@ -30,12 +33,36 @@ class ProgressButton @JvmOverloads constructor(context: Context, attrs: Attribut
     const val STATE_FAILURE = 0x03
   }
 
-  private var state = STATE_IDLE
-
-  private val progressDrawable by lazy { CircularProgressDrawable(context) }
-
-  init {
-
+  // will make this settable for reasons
+  var state = STATE_IDLE
+   set(value) {
+    if (field != value) {
+      field = value
+      // TODO update state from here
+    }
   }
 
+  private val gradientDrawable: GradientDrawable
+  private val progressDrawable by lazy { CircularProgressDrawable(context) }
+
+  var indciatorColor = Color.WHITE
+    set(value) {
+      if (field != value) {
+        field = value
+        progressDrawable.setColorSchemeColors(value)
+      }
+    }
+
+  init {
+    val background = background
+    if (background is InsetDrawable) {
+
+    }
+
+    context.obtainStyledAttributes(attrs, R.styleable.ProgressButton).apply {
+
+
+      recycle()
+    }
+  }
 }
